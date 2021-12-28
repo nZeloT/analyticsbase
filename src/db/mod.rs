@@ -9,12 +9,14 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+use std::path::Path;
+
 pub mod analytics;
 
 type Result<R> = std::result::Result<R, DbError>;
 type DB    = r2d2::PooledConnection<r2d2_sqlite::SqliteConnectionManager>;
 
-pub fn initialize_db() -> Result<r2d2::Pool<r2d2_sqlite::SqliteConnectionManager>> {
+pub fn initialize_db<P : AsRef<Path>>(path : P) -> Result<r2d2::Pool<r2d2_sqlite::SqliteConnectionManager>> {
     let manager = r2d2_sqlite::SqliteConnectionManager::file("./analytics.db");
     let pool = r2d2::Pool::new(manager)?;
     let conn = pool.get()?;

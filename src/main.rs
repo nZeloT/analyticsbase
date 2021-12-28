@@ -10,6 +10,7 @@
  */
 
 use std::net::SocketAddr;
+use std::env;
 
 mod generated;
 mod db;
@@ -18,7 +19,9 @@ mod analytics_handler;
 
 #[tokio::main]
 async fn main() {
-    let db = db::initialize_db().expect("Failed to created DB!");
+    let args : Vec<String> = env::args().collect();
+    println!("Writing database to '{}'", &args[1]);
+    let db = db::initialize_db(&args[1]).expect("Failed to created DB!");
 
     let api = filters::endpoints(db);
 
