@@ -8,7 +8,7 @@ Type=idle
 WorkingDirectory=/home/pi/analyticsbase/
 ExecStart=/home/pi/analyticsbase/target/release/analyticsbase
 
-Restart=always
+Restart=on-failure
 RestartSec=10
 StartLimitBurst=5
 StartLimitInterval=100
